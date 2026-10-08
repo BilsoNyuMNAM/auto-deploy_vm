@@ -2,7 +2,7 @@ services:
   frontend:
     image: dfsdds/frontend
     ports:
-      - "5173:5173"
+      - "80:80"
     depends_on:
       - backend
 
@@ -20,7 +20,7 @@ services:
     environment:
       POSTGRES_PASSWORD: mysecretpassword
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql
 
 volumes:
   pgdata:
