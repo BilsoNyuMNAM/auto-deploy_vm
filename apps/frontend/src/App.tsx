@@ -23,7 +23,7 @@ function App() {
   //sending request to save the todos 
   const submitTodo = ()=>{
     async function saveAlltodos(){
-      const result = await fetch("http://16.171.143.249:3000/todos", {
+      const result = await fetch("http://100.24.16.37:3000/todos", {
         method:"POST",
         headers:{
           "Content-Type": "application/json"
@@ -55,8 +55,9 @@ function App() {
 
   //fetching all the todos
   useEffect(()=>{
+    console.log("fetching the backend server")
     async function fetchAlltodos(){
-      const url = "http://16.171.143.249:3000"
+      const url = "http://100.24.16.37:3000"
       const result = await fetch(url)
       const altodo = await result.json() 
       console.log("All the todos fetched from the backend", altodo.alltodos)
