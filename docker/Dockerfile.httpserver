@@ -1,0 +1,23 @@
+FROM node:alpine
+
+RUN npm install -g pnpm
+
+
+WORKDIR /backend
+
+# Step 1: Copy only package.json files + lockfile for cached installs
+COPY ./package.json .
+COPY ./pnpm-workspace.yaml .
+COPY ./pnpm-lock.yaml .
+COPY ./apps/http-server/package.json ./apps/http-server/package.json
+COPY ./packages/db/package.json ./packages/db/package.json
+COPY ./packages/typescript-config ./packages/typescript-config
+
+
+RUN pnpm install
+
+# Step 2: Copy full source code
+COPY ./apps/http-server ./apps/http-server
+COPY ./packages/db ./packages/db
+
+CMD ["pnpm", "--filter", "http-server", "run", "dev"]

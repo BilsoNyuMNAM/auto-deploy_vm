@@ -1,0 +1,25 @@
+FROM node:alpine AS build
+RUN npm install -g pnpm
+
+
+WORKDIR /frontend
+
+# Step 1: Copy only package.json files + lockfile for cached installs
+
+COPY ./apps/frontend/package.json ./package.json
+
+
+RUN pnpm install
+
+# Step 2: Copy full source code
+COPY ./apps/frontend .
+
+
+
+RUN ["pnpm", "run", "build"] 
+# generate the dist folder 
+
+
+
+FROM nginx:latest
+COPY --from=build /frontend/dist /usr/share/nginx/html
