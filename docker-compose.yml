@@ -1,14 +1,13 @@
 services:
   frontend:
     image: dfsdds/frontend
-
     ports:
       - "5173:5173"
     depends_on:
       - backend
 
   backend:
-     image: dfsdds/backend
+    image: dfsdds/backend
     environment:
       DATABASE_URL: "postgresql://postgres:mysecretpassword@db:5432/postgres?schema=public"
     ports:
@@ -20,4 +19,8 @@ services:
     image: postgres
     environment:
       POSTGRES_PASSWORD: mysecretpassword
-    
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
